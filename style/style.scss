@@ -1,0 +1,143 @@
+// The size of the loader
+$loader-font-size: 100px;
+// We use relative units so we can scale by font-size
+$loader-circle-size: .2em;
+// Magic number to position elements
+$loader-circle-position-1: 0.117em; // sqrt(a2 + b2) / 4 ==  sqrt(50%2 + 50%2) / 4 == sqrt(2500 + 2500) / 4
+$loader-circle-position-2: ((1em - $loader-circle-size) / 2);
+$loader-circle-count: 8; // @todo - make this value adjustable. positions are calculated with value of 8
+$loader-animation-duration: 1.28s;
+$loader-animation-steps: ($loader-animation-duration / $loader-circle-count);
+// Colors
+$loader-base-color: #FFF;
+$loader-highlight-color: #000;
+
+/**
+* Some mixins
+*/
+@mixin border-radius($radius...) {
+    -o-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -webkit-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin keyframes($name...) {
+    @-o-keyframes #{$name} { @content };
+    @-moz-keyframes #{$name} { @content };
+    @-webkit-keyframes #{$name} { @content };
+    @-keyframes #{$name} { @content };
+}
+
+@mixin animation-name($name...) {
+    -o-animation-name: $name;
+    -moz-animation-name: $name;
+    -webkit-animation-name: $name;
+    animation-name: $name;
+}
+
+@mixin animation-duration($duration...) {
+    -o-animation-duration: $duration;
+    -moz-animation-duration: $duration;
+    -webkit-animation-duration: $duration;
+    animation-duration: $duration;
+}
+
+@mixin animation-iteration-count($count...) {
+    -o-animation-iteration-count: $count;
+    -moz-animation-iteration-count: $count;
+    -webkit-animation-iteration-count: $count;
+    animation-iteration-count: $count;
+}
+
+@mixin animation-direction($direction...) {
+    -o-animation-direction: $direction;
+    -moz-animation-direction: $direction;
+    -webkit-animation-direction: $direction;
+    animation-direction: $direction;
+}
+
+@mixin animation-delay($delay...) {
+    -o-animation-delay: $delay;
+    -moz-animation-delay: $delay;
+    -webkit-animation-delay: $delay;
+    animation-delay: $delay;
+}
+
+@include keyframes( "cssLoaderAnimation" ) {
+    from {
+        background-color: $loader-highlight-color}
+    to {
+        background-color: $loader-base-color}
+}
+
+/**
+* The actual css
+*/
+.css-loader {
+    position:relative;
+    width: 1em;
+    height: 1em;
+    font-size: $loader-font-size;
+}
+
+.css-loader__circle {
+    position:absolute;
+    background-color: $loader-base-color;
+    height:$loader-circle-size;
+    width:$loader-circle-size;
+
+    @include border-radius($loader-circle-size);
+    @include animation-name(cssLoaderAnimation);
+    @include animation-duration( $loader-animation-duration );
+    @include animation-iteration-count(infinite);
+    @include animation-direction(normal);
+}
+
+.css-loader__circle--1 {
+    left:0;
+    top: $loader-circle-position-2;
+    @include animation-delay($loader-animation-steps * 3);
+}
+
+.css-loader__circle--2 {
+    left: $loader-circle-position-1;
+    top: $loader-circle-position-1;
+    @include animation-delay($loader-animation-steps * 4);
+}
+
+.css-loader__circle--3 {
+    left: $loader-circle-position-2;
+    top:0;
+    @include animation-delay($loader-animation-steps * 5);
+}
+
+.css-loader__circle--4 {
+    right: $loader-circle-position-1;
+    top: $loader-circle-position-1;
+    @include animation-delay($loader-animation-steps * 6);
+}
+
+.css-loader__circle--5 {
+    right:0;
+    top: $loader-circle-position-2;
+    @include animation-delay($loader-animation-steps * 7);
+}
+
+.css-loader__circle--6 {
+    right: $loader-circle-position-1;
+    bottom: $loader-circle-position-1;
+    @include animation-delay($loader-animation-steps * 8);
+}
+
+.css-loader__circle--7 {
+    left: $loader-circle-position-2;
+    bottom:0;
+    @include animation-delay($loader-animation-steps * 9);
+}
+
+.css-loader__circle--8 {
+    left: $loader-circle-position-1;
+    bottom: $loader-circle-position-1;
+    @include animation-delay($loader-animation-steps * 10);
+}
